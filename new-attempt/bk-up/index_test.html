@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body>
+
+
+    <div id="main"></div>
+
+    
+    <!-- profile create stage -->
+    <div class="console">
+        <div class="profile-frame"></div>
+        <div class="inout-holder">
+            <input type="text" id="user-name" placeholder="Your Name">
+            <button class="uph">Upload Photo</button>
+        </div>
+    </div>
+
+    <!-- captured pic stage -->
+    <div class="console">
+        <div class="profile-frame center"></div>
+        <div class="inout-holder full">
+            <button class="new-upload">Upload another photo</button>
+            <button class="half bck">Back</button>
+            <button class="half">Continue</button>
+        </div>
+    </div>
+
+     <!-- Align pic stage -->
+    <div class="console">
+        <div class="profile-frame center"></div>
+        <div class="inout-holder full">
+            <button class="half bck">Back</button>
+            <button class="half">Preview</button>
+        </div>
+    </div>
+
+     <!-- confirmation stage -->
+    <div class="console">
+        <div class="profile-frame center"></div>
+        <div class="inout-holder full">
+            <button class="half bck">re-align</button>
+            <button class="half">Use Photo</button>
+        </div>
+    </div>
+   
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/fabric.js"></script>
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.js"></script>
+
+    <script src="js/app.js"></script>
+
+
+    <script type="text/babel">
+
+        //////////////// Profile Create Stage ///////
+        app.ProfileCreateStage = React.createClass({
+          render: function() {
+            return (
+                <div className="console">
+                    <div className="profile-frame"></div>
+                    <div className="inout-holder">
+                        <input type="text" id="user-name" placeholder="Your Name"/>
+                        <button>Upload Photo</button>
+                    </div>
+                </div>
+            );
+          }
+        });
+        app.profileCreateInit = function(){
+            ReactDOM.render(<app.ProfileCreateStage />,$('#main')[0]);
+        }
+
+
+        //////////////// Create Pic ////////////////
+        app.ProfileCreateStage = React.createClass({
+          render: function() {
+            return (
+                <div className="console">
+                    <div className="profile-frame center"></div>
+                    <div className="inout-holder full">
+                        <button className="new-upload">Upload another photo</button>
+                        <button className="half bck">Back</button>
+                        <button className="half">Continue</button>
+                    </div>
+                </div>
+            );
+          }
+        });
+        app.picCreate = function(){
+            ReactDOM.render(<app.ProfileCreateStage />,$('#main')[0]);
+        }
+
+
+        //////////////// Align Pic //////////////
+        app.AlignmentStage = React.createClass({
+          render: function() {
+            return (
+                <div className="console">
+                    <div className="profile-frame center"></div>
+                    <div className="inout-holder full">
+                        <button className="half bck">Back</button>
+                        <button className="half">Preview</button>
+                    </div>
+                </div>
+            );
+          }
+        });
+        app.picAlign = function(){
+            ReactDOM.render(<app.AlignmentStage />,$('#main')[0]);
+        }
+
+        //////////////// Confirm Stage //////////////
+        app.ConfirmationStage = React.createClass({
+          render: function() {
+            return (
+                <div className="console">
+                    <div className="profile-frame center"></div>
+                    <div className="inout-holder full">
+                        <button className="half bck">re-align</button>
+                        <button className="half">Use Photo</button>
+                    </div>
+                </div>
+            );
+          }
+        });
+        app.confirmStage = function(){
+            ReactDOM.render(<app.ConfirmationStage />,$('#main')[0]);
+        }
+    </script>
+
+
+
+</body>
+
+</html>

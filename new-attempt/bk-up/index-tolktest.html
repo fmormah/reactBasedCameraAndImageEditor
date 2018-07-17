@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #container {
+            font-family: 'verdana', lucida;
+            position: relative;
+            margin: 0 auto;
+            background-color: black;
+            overflow: hidden;
+        }
+        
+        input {
+            background-color: #ccc;
+            padding: 10px 20px;
+            width: 100%;
+            color: #777;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        a {
+            color: #777;
+            display: block;
+            background-color: #ccc;
+            width: 100%;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: 2px;
+            text-decoration: none;
+        }
+        
+        .guide {
+            position: fixed;
+            z-index: 2;
+            width: 70%;
+            top: 28%;
+            left: 10%;
+        }
+        
+        .canvas-container {
+            margin-top: -80px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+
+
+
+    <div id="container">
+        <input type="file" id="imageLoader" name="imageLoader" />
+        <canvas id="imageCanvas" width="480" height="640"></canvas>
+        <a id="imageSaver"  href="#">Save image</a>
+        
+        
+<!--        yammer buttons-->
+        <button class="saveImage">YAmmer me</button>
+        <button class="logout">Logout</button>
+        
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="js/fabric.js"></script>
+    <script type="text/javascript">
+        window.app = {};
+
+        app.init = function() {
+
+            var iOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+            var viewWidth = window.innerWidth;
+            var viewHeight = window.innerHeight;
+
+
+            if (window.innerWidth > 700) {
+                viewWidth = window.innerWidth / 3;
+                viewHeight = window.innerHeight / 1.5;
+
+                var newY = (window.innerHeight / 2) - (viewHeight / 2);
+
+                document.getElementById('container').style.top = newY + 'px';
+
+                app.inMobile = true;
+            }
+
+            document.getElementById('imageCanvas').width = viewWidth;
+            document.getElementById('imageCanvas').height = viewHeight;
+
+            var canvas = new fabric.Canvas('imageCanvas', {
+                backgroundColor: 'rgb(0,0,0)'
+            });
+
+            var imageLoader = document.getElementById('imageLoader');
+            imageLoader.addEventListener('change', handleImageFromMedia, false);
+
+            function handleImageFromMedia(e) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var img = new Image();
+                    //img.setAttribute('crossOrigin', 'anonymous');
+                    var scale = 0.45;
+                    img.onload = function() {
+                        canvas.clear();
+
+                        app.imgInstance = new fabric.Image(img, {
+                            scaleX: scale,
+                            scaleY: scale,
+                            left: (viewWidth / 2) - ((this.width * scale) / 2),
+                            top: (viewHeight / 2) - ((this.height * scale) / 2),
+                            hasRotatingPoint: false,
+                            opacity: 0.8
+                        })
+
+                        function correctAngle(e) {
+                            if (iOSDevice === true) {
+                                app.imgInstance.setAngle(90);
+                            } else {
+                                app.imgInstance.setAngle(0);
+                            }
+                        }
+
+                        if (iOSDevice === true) {
+                            app.imgInstance.setAngle(90);
+                        } else {
+                            app.imgInstance.setAngle(0);
+                        }
+
+
+                        canvas.on({
+                            'mouse:down': function(e) {
+                                if (e.target) {
+                                    //e.target.opacity = 0.5;
+                                    //correctAngle(e);
+                                    canvas.renderAll();
+                                }
+                            },
+                            'mouse:up': function(e) {
+                                if (e.target) {
+                                    //e.target.opacity = 1;
+                                    //correctAngle(e);
+                                    canvas.renderAll();
+                                }
+                            },
+                            'object:moved': function(e) {
+                                //e.target.opacity = 0.5;
+                                //correctAngle(e);
+                            },
+                            'object:modified': function(e) {
+                                //e.target.opacity = 1;
+                                //correctAngle(e);
+                            },
+                            'touch:gesture': function() {
+
+                            },
+                            'touch:drag': function() {
+
+                            },
+                            'touch:orientation': function() {
+                                //
+                            },
+                            'touch:shake': function() {
+                                //
+                            },
+                            'touch:longpress': function() {
+                                //
+                            }
+                        });
+
+
+                        placeGuide('img/guide.png');
+
+
+                    }
+                    img.src = event.target.result;
+                }
+
+                reader.readAsDataURL(e.target.files[0]);
+            }
+
+            function placeGuide(src) {
+
+                var img = new Image();
+                //img.setAttribute('crossOrigin', 'anonymous');
+                var scale = 0.8;
+                img.onload = function() {
+                    app.guideImg = new fabric.Image(img, {
+                        scaleX: scale,
+                        scaleY: scale,
+                        left: (viewWidth / 2) - ((this.width * scale) / 2),
+                        top: (viewHeight / 2) - ((this.height * scale) / 2) + 80,
+                        hasBorders: false,
+                        hasControls: false,
+                        hasRotatingPoint: false,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        opacity:0.3
+                    })
+
+                    
+                    placeStreak('img/streak.png');
+                    //canvas.add(imgInstance);
+
+
+                }
+                img.src = src;
+            }
+
+            function placeStreak(src) {
+
+                var img = new Image();
+
+                var scale = 0.8;
+                img.onload = function() {
+                    app.streak = new fabric.Image(img, {
+                        scaleX: scale,
+                        scaleY: scale,
+                        left: (viewWidth / 2) - ((this.width * scale) / 2),
+                        top: (viewHeight / 2) - ((app.guideImg.height * scale) / 2) + 80 + (145 * scale),
+                        hasBorders: false,
+                        hasControls: false,
+                        hasRotatingPoint: false,
+                        lockMovementX: true,
+                        lockMovementY: true
+                    })
+                    //console.log(imgInstance);
+                    //canvas.add(imgInstance);
+                    //canvas.sendToBack(app.streak);
+                    //canvas.add(app.streak);
+
+                    
+                    canvas.sendToBack(app.guideImg);
+                    canvas.add(app.imgInstance);
+                    canvas.add(app.streak);
+
+                    //canvas.sendToBack(imgInstance);
+                }
+                img.src = src;
+            }
+
+            var imageSaver = document.getElementById('imageSaver');
+            imageSaver.addEventListener('click', saveImage, false);
+
+            function saveImage(e) {
+
+                app.imgInstance.opacity = 1;
+                canvas.remove(app.guideImg);
+                canvas.bringToFront(app.streak);
+                canvas.deactivateAll().renderAll();
+
+//                this.href = canvas.toDataURL({
+//                    format: 'jpeg',
+//                    quality: 1
+//                });
+
+
+                //save DataURI 
+                window.DataURI=canvas.toDataURL({
+                    format: 'jpeg',
+                    quality: 1
+                });
+                
+
+//                this.download = 'test.png'
+            }
+
+            function convertCanvasToImage(canvas) {
+                var image = new Image();
+                image.src = canvas.toDataURL("image/png");
+                //return image;
+                return canvas.toDataURL("image/png");
+            }
+
+        }
+
+
+        app.init();
+    </script>
+
+
+<!--yammer code-->
+    
+<script type="text/javascript" data-app-id="Er7yMz8WQmyOcGvfimPsQ" src="https://c64.assets-yammer.com/assets/platform_js_sdk.js"></script>    
+<script type="text/javascript">
+
+        
+        
+$(".saveImage").click(function(){
+    
+    yam.getLoginStatus(
+      function(response) {
+        if (response.authResponse) {
+          console.log("logged in");
+
+            var msg = "look at my awesome redstripe!";
+
+
+
+            var m_data = new FormData();
+
+            m_data.append('body', msg);
+            m_data.append('group_id', 8611015);
+
+
+            var imgSrc = window.DataURI;
+
+            var dataURLToBlob = function(dataURL) {
+                var BASE64_MARKER = ';base64,';
+            //    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+            //      var parts = dataURL.split(',');
+            //      var contentType = 'image/jpeg';//parts[0].split(':')[1];''
+            //      var raw = decodeURIComponent(parts[1]);
+            //
+            //      return new Blob([raw], {type: contentType});
+            //    }
+
+                var parts = dataURL.split(BASE64_MARKER);
+                var contentType = 'image/jpeg';// = parts[0].split(':')[1];
+                var raw = window.atob(parts[1]);
+                var rawLength = raw.length;
+
+                var uInt8Array = new Uint8Array(rawLength);
+
+                for (var i = 0; i < rawLength; ++i) {
+                  uInt8Array[i] = raw.charCodeAt(i);
+                }
+
+                return new Blob([uInt8Array], {type: contentType});
+            }
+
+            var blob = dataURLToBlob(imgSrc);
+
+            m_data.append( "attachment1", blob, "redstripe.jpg");
+            
+
+            yam.platform.request({
+
+                url: "messages.json",     
+                contentType: "multipart/form-data",
+                data: m_data,
+                processData: false,
+                contentType: false,
+                method: 'Post',
+                dataType: 'json',
+                success: function (user) { 
+                    alert("The request was successful.");
+                },
+                error: function (user) {console.log(user);
+                    alert("There was an error with the request.");
+                }
+            });
+        
+        }
+        else {
+          yam.platform.login(function (response) { //prompt user to login and authorize your app, as necessary
+            if (response.authResponse) {
+              console.dir(response); //print user information to the console
+              $(".saveImage").trigger( "click" );    // re-trigger the click now that we are logged in.
+            }
+          });
+        }
+      }
+    ); 
+})        
+   
+ 
+//logout function for testing        
+$(".logout").click(function(){
+    yam.platform.logout(function (response) {
+          alert("user was logged out");
+        })
+    
+})        
+</script>
+</body>
+
+</html>

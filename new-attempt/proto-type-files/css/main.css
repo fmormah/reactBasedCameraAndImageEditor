@@ -1,0 +1,392 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: #dde0e6;
+  font-family: Arial;
+}
+#container {
+  font-family: 'verdana', lucida;
+  position: relative;
+  margin: 0 auto;
+  background-color: black;
+  overflow: hidden;
+}
+.slider-holder {
+  width: 30%;
+  margin: -3px 0 54px;
+  display: inline-block;
+}
+.slider-holder .slide-label {
+  display: inline-block;
+  margin-right: 6%;
+  font-size: 13px;
+  width: auto;
+  vertical-align: top;
+  color: #444;
+  text-transform: uppercase;
+}
+.slider-holder .slider {
+  width: 65%;
+  vertical-align: top;
+  margin: 0 2% 0 0;
+  display: inline-block;
+}
+.rotate-device {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  display: none;
+  background-color: white;
+  background-image: url('../img/rotate.jpg');
+  background-position: center;
+  background-size: 80%;
+  background-repeat: no-repeat;
+}
+.rotate-device.active {
+  display: none;
+}
+.canvas-container {
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.console {
+  position: relative;
+  background-color: #fff;
+  max-width: 956px;
+  width: 95%;
+  min-height: 513px;
+  border-radius: 25px;
+  margin: 0px auto;
+  padding: 80px;
+  box-sizing: border-box;
+  padding-bottom: 45px;
+  opacity: 0;
+  transition-duration: 1s;
+}
+.profile-frame {
+  width: 500px;
+  height: 336px;
+  border: 2px solid #888;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  z-index: 1;
+  background-color: #000;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+canvas.profile-frame {
+  background-color: transparent;
+}
+.profile-frame.center {
+  margin: 0 auto;
+  display: block;
+}
+.inout-holder {
+  width: 200px;
+  text-align: right;
+  float: right;
+}
+.inout-holder.full {
+  width: 100%;
+  float: none;
+  margin-top: 60px;
+  text-align: center;
+}
+label .btn,
+input[type="file"],
+button {
+  /* background styles */
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 15px 25px;
+  background: #396b9a;
+  /* text styles */
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 100;
+  border: none;
+  border-radius: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+button.bck {
+  background: #ccc;
+}
+button.half {
+  width: 25%;
+  display: inline-block;
+  vertical-align: top;
+  margin: -20px 5px 0;
+}
+button.new-upload {
+  width: auto;
+  z-index: 2;
+  margin: -130px auto 62px;
+}
+input {
+  font-size: 16px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+label .btn:hover,
+input[type="file"]:hover,
+button:hover {
+  opacity: 0.8;
+}
+.example-bg {
+  background-image: url('../img/example-pic.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 60%;
+}
+label .btn {
+  text-align: center;
+}
+label .btn.a {
+  width: 60%;
+  margin: -30px auto 41px;
+}
+@media only screen and (max-width: 700px) {
+  label .btn.a {
+    width: 50%;
+    font-size: 13px;
+  }
+}
+#imageLoader {
+  display: none;
+}
+.gesture-guide {
+  display: none;
+}
+@media only screen and (max-width: 700px) {
+  .rotate-device {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    display: none;
+  }
+  .rotate-device.active {
+    display: block;
+  }
+  .slider-holder {
+    display: none;
+  }
+  .gesture-guide {
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: 99;
+    top: 0;
+    transition-duration: 0.5s;
+  }
+  .console {
+    min-height: initial;
+    padding: 50px 0;
+    margin: 0 auto;
+    height: 93%;
+    position: absolute;
+    width: 94%;
+    left: 3%;
+    top: 3%;
+  }
+  .profile-frame {
+    width: 100%;
+    height: 98%;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    border: none;
+    border-top: 2px solid #888;
+    border-bottom: 2px solid #888;
+    margin-top: -5%;
+  }
+  .profile-frame.center {
+    margin-top: -5%;
+  }
+  .inout-holder {
+    width: 100%;
+    text-align: right;
+    float: none;
+    padding: 27px;
+    box-sizing: border-box;
+    margin-top: -217px;
+    position: relative;
+    z-index: 10;
+  }
+  .inout-holder.full {
+    margin-top: 120px;
+  }
+  .inout-holder.full label {
+    display: block;
+    margin-top: -220px;
+    margin-bottom: 44px;
+    font-size: 13px;
+  }
+  .inout-holder.full.c {
+    z-index: 200;
+    position: relative;
+    text-align: center;
+    margin-top: 0;
+  }
+  button {
+    width: 30%;
+    font-size: 14px;
+    padding: 10px;
+  }
+  button.half {
+    width: 30%;
+  }
+  button.new-upload {
+    margin: -84px auto 62px;
+  }
+  .uph {
+    width: 100%;
+  }
+}
